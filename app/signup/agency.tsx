@@ -2,9 +2,9 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import { View, Text, StyleSheet } from 'react-native';
 import { useFonts } from 'expo-font';
-import { customFonts } from '../constants/fonts';
+import { customFonts } from '../../constants/fonts';
 
-export default function LoginScreen() {
+export default function SignupAgencyScreen() {
     const router = useRouter();
     const [fontsLoaded] = useFonts(customFonts);
 
@@ -19,7 +19,7 @@ export default function LoginScreen() {
         style={styles.container}
         >
             <View>
-                <Text style={styles.title}>로그인</Text>
+                <Text style={styles.title}>기관 회원가입</Text>
             </View>
         </LinearGradient>
     );

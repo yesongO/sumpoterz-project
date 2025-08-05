@@ -4,7 +4,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { useFonts } from 'expo-font';
 import { customFonts } from '../constants/fonts';
 
-export default function LoginScreen() {
+export default function SelectTypeScreen() {
     const router = useRouter();
     const [fontsLoaded] = useFonts(customFonts);
 
@@ -19,7 +19,7 @@ export default function LoginScreen() {
         style={styles.container}
         >
             <View>
-                <Text style={styles.title}>로그인</Text>
+                <Text style={styles.title}>선택해 주세요</Text>
             </View>
         </LinearGradient>
     );
