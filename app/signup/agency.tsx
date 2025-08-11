@@ -173,33 +173,33 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     backButtonText: {
-        fontFamily: 'godoMaum',
-        fontSize: 18,
+        fontFamily: 'inkLipquid',
+        fontSize: 26,
         color: '#484848',
     },
     title: {
-        fontFamily: 'godoMaum',
-        fontSize: 32,
+        fontFamily: 'inkLipquid',
+        fontSize: 40,
         color: '#484848',
         textAlign: 'center',
-        marginBottom: 40,
+        marginBottom: 20,
     },
     formContainer: {
         flex: 1,
     },
     inputGroup: {
-        marginBottom: 20,
+        marginBottom: 14,
     },
     label: {
         fontFamily: 'godoMaum',
-        fontSize: 22,
+        fontSize: 28,
         color: '#484848',
         marginBottom: 8,
         fontWeight: '600',
     },
     input: {
         width: '100%',
-        height: 50,
+        height: 40,
         borderWidth: 1,
         borderColor: '#E0E0E0',
         borderRadius: 10,
@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
     signupButton: {
         width: '100%',
         height: 50,
-        backgroundColor: '#007AFF',
+        backgroundColor: '#508AFF',
         borderRadius: 10,
         justifyContent: 'center',
         alignItems: 'center',
@@ -218,7 +218,7 @@ const styles = StyleSheet.create({
     },
     signupButtonText: {
         fontFamily: 'godoMaum',
-        fontSize: 20,
+        fontSize: 36,
         color: '#FFFFFF',
     },
 });

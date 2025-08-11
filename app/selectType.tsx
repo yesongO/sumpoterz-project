@@ -1,7 +1,7 @@
 import { useFonts } from 'expo-font';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { customFonts } from '../constants/fonts';
 
 export default function SelectTypeScreen() {
@@ -24,52 +24,80 @@ export default function SelectTypeScreen() {
         router.push('/signup/agency' as any);
     };
 
+    const handleBack = () => {
+        router.back();
+    };
+
     return (
         <LinearGradient
             colors={['#FFFEDD', '#FFFFFF', '#ABDCFF']}
             locations={[0, 0.5, 0.99]}
             style={styles.container}
         >
+            <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
+                <TouchableOpacity style={styles.backButton} onPress={handleBack}>
+                    <Text style={styles.backButtonText}>← 뒤로</Text>
+                </TouchableOpacity>
+
             <View style={styles.content}>
                 <Text style={styles.title}>선택해 주세요</Text>
                 
-                <View style={styles.cardContainer}>
-                    <TouchableOpacity style={styles.card} onPress={handleStudentSelect}>
-                        <View style={styles.cardContent}>
-                            <View style={styles.studentIcon}>
-                                <View style={styles.studentCharacter}>
-                                    <View style={styles.head} />
-                                    <View style={styles.body} />
-                                    <View style={styles.books}>
-                                        <View style={[styles.book, styles.book1]} />
-                                        <View style={[styles.book, styles.book2]} />
-                                        <View style={[styles.book, styles.book3]} />
+                    <View style={styles.cardContainer}>
+                        <TouchableOpacity style={styles.card} onPress={handleStudentSelect}>
+                            <View style={styles.cardContent}>
+                                <View style={styles.studentIcon}>
+                                    <View style={styles.studentCharacter}>
+                                        <View style={styles.head} />
+                                        <View style={styles.body} />
+                                        <View style={styles.books}>
+                                            <View style={[styles.book, styles.book1]} />
+                                            <View style={[styles.book, styles.book2]} />
+                                            <View style={[styles.book, styles.book3]} />
+                                        </View>
                                     </View>
                                 </View>
+                                <Text style={styles.cardText}>학생이에요</Text>
                             </View>
-                            <Text style={styles.cardText}>학생이에요</Text>
-                        </View>
-                    </TouchableOpacity>
+                        </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.card} onPress={handleAgencySelect}>
-                        <View style={styles.cardContent}>
-                            <View style={styles.agencyIcon}>
-                                <View style={styles.buildings}>
-                                    <View style={[styles.building, styles.building1]} />
-                                    <View style={[styles.building, styles.building2]} />
-                                    <View style={[styles.building, styles.building3]} />
+                        <TouchableOpacity style={styles.card} onPress={handleAgencySelect}>
+                            <View style={styles.cardContent}>
+                                <View style={styles.agencyIcon}>
+                                    <View style={styles.buildings}>
+                                        <View style={[styles.building, styles.building1]} />
+                                        <View style={[styles.building, styles.building2]} />
+                                        <View style={[styles.building, styles.building3]} />
+                                    </View>
                                 </View>
+                                <Text style={styles.cardText}>기관이에요</Text>
                             </View>
-                            <Text style={styles.cardText}>기관이에요</Text>
-                        </View>
-                    </TouchableOpacity>
+                        </TouchableOpacity>
+                    </View>
                 </View>
-            </View>
+            </ScrollView>
         </LinearGradient>
     );
 }
 
 const styles = StyleSheet.create({
+    scrollView: {
+        flex: 1,
+    },
+    scrollContent: {
+        flexGrow: 1,
+        paddingHorizontal: 30,
+        paddingTop: 60,
+        paddingBottom: 40,
+    },
+    backButton: {
+        alignSelf: 'flex-start',
+        marginBottom: 20,
+    },
+    backButtonText: {
+        fontFamily: 'inkLipquid',
+        fontSize: 26,
+        color: '#484848',
+    },
     loadingContainer: {
         flex: 1,
         justifyContent: 'center',
@@ -84,19 +112,21 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         paddingHorizontal: 40,
+        marginBottom: 100,
     },
     title: {
-        fontFamily: 'godoMaum',
-        fontSize: 32,
+        fontFamily: 'inkLipquid',
+        fontSize: 40,
         color: '#000000',
         marginBottom: 60,
         textAlign: 'center',
     },
     cardContainer: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         width: '100%',
         paddingHorizontal: 20,
+        gap: 20,
     },
     card: {
         width: 140,

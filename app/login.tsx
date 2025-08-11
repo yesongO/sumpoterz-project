@@ -14,6 +14,9 @@ export default function LoginScreen() {
 
     const handleLogin = () => {
         console.log('로그인 버튼 클릭');
+        // 추후 API 연결
+
+        router.replace('/(tabs)/main');
     }
 
     const handleNavigateToSignup = () => {
@@ -58,13 +61,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     title: {
-        fontFamily: 'godoMaum',
+        fontFamily: 'inkLipquid',
         color: '#484848',
         fontSize: 50,
         alignSelf: 'flex-start',
         marginTop: -100,
         marginLeft: 39,
-        marginBottom: 50,
+        marginBottom: 40,
     },
     input: {
         width: '80%',

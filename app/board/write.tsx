@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Alert, ScrollView, StyleSheet, TextInput, View } from 'react-native';
-import { ThemedText } from '../components/ThemedText';
-import { ThemedView } from '../components/ThemedView';
-import Button from '../components/common/Button';
+import { ThemedText } from '../../components/ThemedText';
+import { ThemedView } from '../../components/ThemedView';
+import Button from '../../components/common/Button';
 
 export default function BoardWrite() {
   const [title, setTitle] = useState('');
