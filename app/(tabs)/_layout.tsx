@@ -4,9 +4,12 @@ import { Platform } from 'react-native';
 
 import { HapticTab } from '@/components/HapticTab';
 import { IconSymbol } from '@/components/ui/IconSymbol';
+import { Ionicons } from '@expo/vector-icons';
+import { Pressable } from 'react-native';
 import TabBarBackground from '@/components/ui/TabBarBackground';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { router } from 'expo-router';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -38,6 +41,21 @@ export default function TabLayout() {
         options={{
           title: '게시판',
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="notification"
+        options={{
+          title: '알림',
+          tabBarIcon: ({ color }) => (
+            <Ionicons size={28} name="notifications" color={color} />
+          ),
+        }}
+        listeners={{
+          tabPress: (e) => {
+            e.preventDefault();
+            router.push('/(modals)/notification');
+          },
         }}
       />
       <Tabs.Screen

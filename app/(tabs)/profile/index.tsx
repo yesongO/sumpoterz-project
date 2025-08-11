@@ -6,7 +6,8 @@ export default function ProfileIndex() {
   return (
     <ThemedView style={styles.container}>
       <ThemedText style={styles.title}>프로필</ThemedText>
-      <ThemedText style={styles.subtitle}>사용자 정보 관리</ThemedText>
+      <ThemedText style={styles.subtitle}>기관으로 로그인 시 기관페이지가 뜨고</ThemedText>
+      <ThemedText style={styles.subtitle}>학생으로 로그인 시 나의페이지가 뜨게됩니다.</ThemedText>
     </ThemedView>
   );
 }
@@ -28,3 +29,13 @@ const styles = StyleSheet.create({
     opacity: 0.7,
   },
 });
+
+// import Agency from './agency';
+// import Student from './student';
+// import { useUserType } from '../hooks/useUserType'; // 예시
+
+// export default function ProfileIndex() {
+//   const userType = useUserType(); // 'agency' or 'student'
+
+//   return userType === 'agency' ? <Agency /> : <Student />;
+// }
