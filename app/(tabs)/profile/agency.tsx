@@ -1,9 +1,16 @@
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { ThemedText } from '../../../components/ThemedText';
 import { ThemedView } from '../../../components/ThemedView';
+import TopHeaderAgency from '../../../components/TopHeaderAgency';
 
 export default function AgencyProfile() {
-  return (
+  return (  
+    <>
+    <TopHeaderAgency
+      showBackButton={true}
+      logoText='기관페이지'
+    />
+
     <ThemedView style={styles.container}>
       <ScrollView style={styles.scrollView}>
         <ThemedText style={styles.title}>기관 마이페이지</ThemedText>
@@ -41,6 +48,7 @@ export default function AgencyProfile() {
         </View>
       </ScrollView>
     </ThemedView>
+    </>
   );
 }
 

@@ -1,9 +1,16 @@
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { ThemedText } from '../../../components/ThemedText';
 import { ThemedView } from '../../../components/ThemedView';
+import TopHeaderStudent from '../../../components/TopHeaderStudent';
 
 export default function StudentProfile() {
   return (
+    <>
+    <TopHeaderStudent
+      showBackButton={true}
+      logoText='나의페이지'
+    />
+    
     <ThemedView style={styles.container}>
       <ScrollView style={styles.scrollView}>
         <ThemedText style={styles.title}>학생 마이페이지</ThemedText>
@@ -37,6 +44,7 @@ export default function StudentProfile() {
         </View>
       </ScrollView>
     </ThemedView>
+    </>
   );
 }
 
