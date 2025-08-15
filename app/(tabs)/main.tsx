@@ -1,6 +1,6 @@
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
-import { Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Alert, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import TopHeaderMain from '../../components/TopHeaderMain';
 
 export default function MainPage() {
@@ -10,6 +10,27 @@ export default function MainPage() {
   
   const categories = ['전체', '교육', '환경', '문화', '복지', '동물'];
   
+  // 로그아웃 처리
+  const handleLogout = () => {
+    Alert.alert(
+      '로그아웃',
+      '로그아웃 하시겠습니까?',
+      [
+        {
+          text: '아니오',
+          style: 'cancel',
+        },
+        {
+          text: '예',
+          onPress: () => {
+            // 로그인 페이지로 이동
+            router.push('/login');
+          },
+        },
+      ]
+    );
+  };
+
   const events = [
     {
       id: 1,
@@ -17,7 +38,7 @@ export default function MainPage() {
       date: '2025.10.08 ~ 10.10',
       location: '강화군 불은면 중앙로 삼성초등학교',
       category: '교육',
-      image: require('../../assets/images/men.png'),
+      image: require('../../assets/images/StudentsImage.png'),
     },
     {
       id: 2,
@@ -132,17 +153,18 @@ export default function MainPage() {
   return (
     <>
       <TopHeaderMain
-        showBackButton={false}
+        showBackButton={true}
         logoText='섬포터즈'
         profileImageSource={require('../../assets/images/men.png')}
         gender='agency'
+        onLogoutPress={handleLogout}
       />
 
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         {/* 검색바 */}
         <View style={styles.searchContainer}>
           <View style={styles.searchBar}>
-            <Text style={styles.searchIcon}>🔍</Text>
+            <Image source={require('../../assets/images/search.png')} style={styles.searchIcon} />
             <TextInput
               style={styles.searchInput}
               placeholder="Search"
@@ -265,8 +287,10 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
   },
   searchIcon: {
-    fontSize: 18,
+    width: 20,
+    height: 20,
     marginRight: 10,
+    resizeMode: 'contain',
   },
   searchInput: {
     flex: 1,
