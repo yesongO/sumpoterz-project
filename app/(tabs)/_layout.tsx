@@ -37,18 +37,19 @@ export default function TabLayout() {
           left: 16,
           right: 16,
           borderRadius: 20,
+          flexDirection: 'row',
+          justifyContent: 'space-between',
         },
         tabBarLabelStyle: {
-          fontSize: 11,
-          fontWeight: '600',
-          color: '#000',
-          marginTop: 6,
+          display: 'none',
         },
         tabBarIconStyle: {
           marginBottom: 0,
         },
         tabBarItemStyle: {
           paddingHorizontal: 0,
+          flex: 1,
+          maxWidth: '25%',
         },
       }}
     >

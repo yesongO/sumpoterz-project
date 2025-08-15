@@ -6,9 +6,63 @@ import TopHeaderMain from '../../components/TopHeaderMain';
 export default function MainPage() {
   const [selectedCategory, setSelectedCategory] = useState('전체');
   const [searchQuery, setSearchQuery] = useState('');
+  const [currentBannerIndex, setCurrentBannerIndex] = useState(0);
   const router = useRouter();
   
   const categories = ['전체', '교육', '환경', '문화', '복지', '동물'];
+  
+  // 배너 데이터 추가 (무한 스크롤을 위해 앞뒤로 복사)
+  const bannerData = [
+    {
+      id: 1,
+      title: '강화도 옹진군 유채마을',
+      subtitle: '노부부 스냅사진 찍어드리기',
+      date: '2025.11.12 ~ 11.20',
+      icon: '🎨',
+    },
+    {
+      id: 2,
+      title: '한빛초등학교 AI교육봉사',
+      subtitle: '초등학생들과 함께하는 AI 체험',
+      date: '2025.10.08 ~ 10.10',
+      icon: '🤖',
+    },
+    {
+      id: 3,
+      title: '서울시립도서관 독서지도',
+      subtitle: '아이들의 독서 습관 형성 도우기',
+      date: '2025.11.01 ~ 11.03',
+      icon: '📚',
+    },
+    {
+      id: 4,
+      title: '한강공원 환경정리',
+      subtitle: '플로깅과 함께하는 환경보호',
+      date: '2025.10.25 ~ 10.26',
+      icon: '🌱',
+    },
+    {
+      id: 5,
+      title: '인천시 장애인복지관',
+      subtitle: '장애인과 함께하는 문화체험',
+      date: '2025.11.05 ~ 11.07',
+      icon: '❤️',
+    },
+  ];
+
+  // 무한 스크롤을 위한 확장된 데이터 (앞뒤로 복사)
+  const extendedBannerData = [
+    ...bannerData.slice(-2), // 마지막 2개를 앞에 추가
+    ...bannerData,           // 원본 데이터
+    ...bannerData.slice(0, 2), // 처음 2개를 뒤에 추가
+  ];
+
+  // 실제 인덱스 계산 (확장된 데이터에서 원본 인덱스로 변환)
+  const getRealIndex = (index: number) => {
+    if (index < 2) return bannerData.length - 2 + index;
+    if (index >= bannerData.length + 2) return index - bannerData.length - 2;
+    return index - 2;
+  };
   
   // 로그아웃 처리
   const handleLogout = () => {
@@ -182,26 +236,45 @@ export default function MainPage() {
 
         {/* 배너 */}
         <View style={styles.bannerContainer}>
-          <View style={styles.banner}>
-            <View style={styles.bannerContent}>
-              <View style={styles.bannerText}>
-                <Text style={styles.bannerTitle}>강화도 옹진군 유채마을</Text>
-                <Text style={styles.bannerSubtitle}>노부부 스냅사진 찍어드리기</Text>
-                <Text style={styles.bannerDate}>2025.11.12 ~ 11.20</Text>
+          <ScrollView 
+            horizontal 
+            showsHorizontalScrollIndicator={false}
+            pagingEnabled
+            decelerationRate="fast"
+            snapToInterval={360}
+            snapToAlignment="center"
+            onMomentumScrollEnd={(event) => {
+              const index = Math.round(event.nativeEvent.contentOffset.x / 360);
+              const realIndex = getRealIndex(index);
+              setCurrentBannerIndex(realIndex);
+            }}
+            style={styles.bannerScrollView}
+            contentContainerStyle={styles.bannerScrollContent}
+            contentOffset={{ x: 360 * 2, y: 0 }}
+          >
+            {extendedBannerData.map((banner, index) => (
+              <View key={`${banner.id}-${index}`} style={styles.banner}>
+                <View style={styles.bannerContent}>
+                  <View style={styles.bannerText}>
+                    <Text style={styles.bannerTitle}>{banner.title}</Text>
+                    <Text style={styles.bannerSubtitle}>{banner.subtitle}</Text>
+                    <Text style={styles.bannerDate}>{banner.date}</Text>
+                  </View>
+                  <View style={styles.bannerImage}>
+                    <Text style={styles.bannerImagePlaceholder}>{banner.icon}</Text>
+                  </View>
+                </View>
               </View>
-              <View style={styles.bannerImage}>
-                <Text style={styles.bannerImagePlaceholder}>🎨</Text>
-              </View>
-            </View>
-          </View>
+            ))}
+          </ScrollView>
           {/* 배너 인디케이터 */}
           <View style={styles.bannerIndicator}>
-            {[1, 2, 3, 4, 5].map((dot, index) => (
+            {bannerData.map((_, index) => (
               <View
                 key={index}
                 style={[
                   styles.indicatorDot,
-                  index === 0 && styles.activeIndicatorDot
+                  index === currentBannerIndex && styles.activeIndicatorDot
                 ]}
               />
             ))}
@@ -302,14 +375,20 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   bannerContainer: {
-    paddingHorizontal: 20,
     marginBottom: 20,
   },
+  bannerScrollView: {
+    height: 120,
+  },
+  bannerScrollContent: {
+    alignItems: 'center',
+  },
   banner: {
+    width: 320,
     backgroundColor: '#fff9c4',
     borderRadius: 15,
-    padding: 20,
-    marginBottom: 15,
+    padding: 16,
+    marginHorizontal: 20,
   },
   bannerContent: {
     flexDirection: 'row',
@@ -318,50 +397,49 @@ const styles = StyleSheet.create({
   },
   bannerText: {
     flex: 1,
+    marginRight: 10,
   },
   bannerTitle: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold',
     color: '#333',
-    marginBottom: 5,
+    marginBottom: 6,
   },
   bannerSubtitle: {
-    fontSize: 16,
-    color: '#333',
-    marginBottom: 5,
+    fontSize: 13,
+    color: '#666',
+    marginBottom: 4,
   },
   bannerDate: {
-    fontSize: 14,
-    color: '#666',
+    fontSize: 11,
+    color: '#888',
   },
   bannerImage: {
-    width: 80,
-    height: 80,
-    backgroundColor: '#e8f5e8',
-    borderRadius: 10,
+    width: 50,
+    height: 50,
+    backgroundColor: '#fff',
+    borderRadius: 25,
     justifyContent: 'center',
     alignItems: 'center',
   },
   bannerImagePlaceholder: {
-    fontSize: 40,
+    fontSize: 20,
   },
   bannerIndicator: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    marginTop: 15,
   },
   indicatorDot: {
     width: 8,
     height: 8,
     borderRadius: 4,
-    backgroundColor: '#ccc',
+    backgroundColor: '#ddd',
     marginHorizontal: 4,
   },
   activeIndicatorDot: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
-    backgroundColor: '#666',
+    backgroundColor: '#007AFF',
   },
   categoryContainer: {
     paddingHorizontal: 20,
