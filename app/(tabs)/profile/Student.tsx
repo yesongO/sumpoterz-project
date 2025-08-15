@@ -1,89 +1,239 @@
-import { ScrollView, StyleSheet, View } from 'react-native';
-import { ThemedText } from '../../../components/ThemedText';
-import { ThemedView } from '../../../components/ThemedView';
+import { Image, Linking, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import TopHeaderStudent from '../../../components/TopHeaderStudent';
+import { useAuth } from '../../../context/AuthContext';
 
 export default function StudentProfile() {
+  const { user } = useAuth();
+  const portfolioUrl = user?.profile?.portfolio || 'https://www.tistory.com';
+
+  const volunteerItems = [
+    {
+      id: '1',
+      title: '한빛초등학교 AI교육봉사',
+      date: '2025.10.08 ~ 10.10',
+      status: '진행중' as const,
+      thumbnail: require('../../../assets/images/StudentsImage.png'),
+    },
+    {
+      id: '2',
+      title: '은빛경로당 디지털교육봉사',
+      date: '2025.03.12 ~ 03.13',
+      status: '완료' as const,
+      thumbnail: null,
+    },
+  ];
+
+  const openPortfolio = () => {
+    if (user?.profile?.portfolio) {
+      Linking.openURL(user.profile.portfolio);
+    } else {
+      Linking.openURL(portfolioUrl);
+    }
+  };
+
   return (
     <>
-    <TopHeaderStudent
-      showBackButton={true}
-      logoText='나의페이지'
-    />
-    
-    <ThemedView style={styles.container}>
-      <ScrollView style={styles.scrollView}>
-        <ThemedText style={styles.title}>학생 마이페이지</ThemedText>
-        
-        <View style={styles.section}>
-          <ThemedText style={styles.sectionTitle}>내 정보</ThemedText>
-          <View style={styles.infoItem}>
-            <ThemedText style={styles.label}>이름:</ThemedText>
-            <ThemedText style={styles.value}>홍길동</ThemedText>
+      <TopHeaderStudent showBackButton={true} logoText="나의페이지" />
+
+      <ScrollView style={styles.container} contentContainerStyle={{ paddingBottom: 100 }}>
+        {/* 정보 카드 */}
+        <View style={styles.card}>
+          <InfoRow label="이름" value={user?.name || '강유림'} />
+          <Separator />
+          <InfoRow label="전화번호" value="01064818062" />
+          <Separator />
+          <View style={styles.infoBlockRow}>
+            <Text style={styles.infoLabel}>대학명 & 학과</Text>
+            <View style={{ flex: 1 }}>
+              <Text style={styles.infoValue}>{user?.profile?.university || '인하대학교'}</Text>
+              <Text style={styles.infoValue}>{user?.profile?.major || '인공지능공학과'}</Text>
+            </View>
           </View>
-          <View style={styles.infoItem}>
-            <ThemedText style={styles.label}>학교:</ThemedText>
-            <ThemedText style={styles.value}>서울고등학교</ThemedText>
+          <Separator />
+          <View style={styles.infoBlockRow}>
+            <Text style={styles.infoLabel}>자기소개</Text>
+            <View style={{ flex: 1 }}>
+              {user?.profile?.selfIntroduction ? (
+                user.profile.selfIntroduction.split('\n').map((line, index) => (
+                  <Text key={index} style={styles.infoValue}>{line}</Text>
+                ))
+              ) : (
+                <>
+                  <Text style={styles.infoValue}>자기소개를 합니다.</Text>
+                  <Text style={styles.infoValue}>안녕하세요</Text>
+                  <Text style={styles.infoValue}>일단 대충 만들겠습니다.</Text>
+                  <Text style={styles.infoValue}>봉사정신 투철합니다.</Text>
+                  <Text style={styles.infoValue}>섬포터즈 화이팅</Text>
+                </>
+              )}
+            </View>
           </View>
-          <View style={styles.infoItem}>
-            <ThemedText style={styles.label}>학년:</ThemedText>
-            <ThemedText style={styles.value}>2학년</ThemedText>
+          <Separator />
+          <View style={styles.infoBlockRow}>
+            <Text style={styles.infoLabel}>포트폴리오</Text>
+            <TouchableOpacity onPress={openPortfolio}>
+              <Text style={[styles.infoValue, styles.linkText]}>
+                {user?.profile?.portfolio ? user.profile.portfolio : 'www.tistory.com… ?'}
+              </Text>
+            </TouchableOpacity>
           </View>
         </View>
 
-        <View style={styles.section}>
-          <ThemedText style={styles.sectionTitle}>봉사활동 현황</ThemedText>
-          <View style={styles.infoItem}>
-            <ThemedText style={styles.label}>총 봉사시간:</ThemedText>
-            <ThemedText style={styles.value}>45시간</ThemedText>
-          </View>
-          <View style={styles.infoItem}>
-            <ThemedText style={styles.label}>참여한 봉사:</ThemedText>
-            <ThemedText style={styles.value}>12건</ThemedText>
-          </View>
+        {/* 나의 봉사 */}
+        <View style={styles.sectionHeaderRow}>
+          <Text style={styles.sectionHeaderText}>나의 봉사</Text>
+        </View>
+        <View style={styles.card}>
+          {volunteerItems.map((item, index) => (
+            <View key={item.id}>
+              <View style={styles.volunteerRow}>
+                {item.thumbnail ? (
+                  <Image source={item.thumbnail} style={styles.volunteerThumb} />
+                ) : (
+                  <View style={styles.volunteerThumbPlaceholder} />
+                )}
+                <View style={{ flex: 1 }}>
+                  <Text style={styles.volunteerTitle}>{item.title}</Text>
+                  <Text style={styles.volunteerDate}>{item.date}</Text>
+                </View>
+                <View
+                  style={[
+                    styles.statusBadge,
+                    item.status === '진행중' ? styles.statusProgress : styles.statusDone,
+                  ]}
+                >
+                  <Text
+                    style={[
+                      styles.statusText,
+                      item.status === '진행중' ? styles.statusTextProgress : styles.statusTextDone,
+                    ]}
+                  >
+                    {item.status}
+                  </Text>
+                </View>
+              </View>
+              {index < volunteerItems.length - 1 && <Separator />}
+            </View>
+          ))}
         </View>
       </ScrollView>
-    </ThemedView>
     </>
   );
+}
+
+function InfoRow({ label, value }: { label: string; value: string }) {
+  return (
+    <View style={styles.infoRow}>
+      <Text style={styles.infoLabel}>{label}</Text>
+      <Text style={styles.infoValue}>{value}</Text>
+    </View>
+  );
+}
+
+function Separator() {
+  return <View style={styles.separator} />;
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#fff',
+    paddingHorizontal: 12,
   },
-  scrollView: {
-    flex: 1,
-    padding: 20,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 30,
-    textAlign: 'center',
-  },
-  section: {
-    marginBottom: 30,
-  },
-  sectionTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    marginBottom: 15,
-    color: '#007AFF',
-  },
-  infoItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+  card: {
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#EFEFEF',
+    paddingHorizontal: 12,
     paddingVertical: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
+    marginTop: 12,
   },
-  label: {
-    fontSize: 16,
-    fontWeight: '500',
+  infoRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingVertical: 14,
   },
-  value: {
+  infoBlockRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+    paddingVertical: 14,
+    gap: 12,
+  },
+  infoLabel: {
+    width: 90,
+    fontSize: 14,
+    color: '#666',
+  },
+  infoValue: {
+    fontSize: 14,
+    color: '#222',
+  },
+  linkText: {
+    color: '#0066CC',
+    textDecorationLine: 'underline',
+  },
+  separator: {
+    height: 1,
+    backgroundColor: '#F0F0F0',
+  },
+  sectionHeaderRow: {
+    marginTop: 18,
+    paddingHorizontal: 2,
+  },
+  sectionHeaderText: {
+    fontSize: 14,
+    color: '#666',
+  },
+  volunteerRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 14,
+    gap: 12,
+  },
+  volunteerThumb: {
+    width: 56,
+    height: 56,
+    borderRadius: 8,
+    backgroundColor: '#E8F5E8',
+  },
+  volunteerThumbPlaceholder: {
+    width: 56,
+    height: 56,
+    borderRadius: 8,
+    backgroundColor: '#EAF5E9',
+  },
+  volunteerTitle: {
     fontSize: 16,
-    opacity: 0.8,
+    fontWeight: '600',
+    color: '#222',
+    marginBottom: 4,
+  },
+  volunteerDate: {
+    fontSize: 13,
+    color: '#8A8A8A',
+  },
+  statusBadge: {
+    borderRadius: 12,
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+  },
+  statusProgress: {
+    backgroundColor: '#FFECEC',
+  },
+  statusDone: {
+    backgroundColor: '#E8F0FF',
+  },
+  statusText: {
+    fontSize: 12,
+    fontWeight: '600',
+  },
+  statusTextProgress: {
+    color: '#FF3B30',
+  },
+  statusTextDone: {
+    color: '#3A7BFF',
   },
 });
