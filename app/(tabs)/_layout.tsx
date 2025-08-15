@@ -55,28 +55,28 @@ export default function TabLayout() {
       <Tabs.Screen
         name="main"
         options={{
-          title: '홈',
+          title: '',
           tabBarIcon: ({ color }) => renderIcon(icons.home, color),
         }}
       />
       <Tabs.Screen
         name="board"
         options={{
-          title: '게시판',
+          title: '',
           tabBarIcon: ({ color }) => renderIcon(icons.calendar, color),
         }}
       />
       <Tabs.Screen
         name="notification"
         options={{
-          title: '알림',
+          title: '',
           tabBarIcon: ({ color }) => renderIcon(icons.bell, color),
         }}
       />
       <Tabs.Screen
         name="profile/index"
         options={{
-          title: '프로필',
+          title: '',
           tabBarIcon: ({ color }) => renderIcon(icons.user, color),
         }}
       />
@@ -88,11 +88,11 @@ const styles = StyleSheet.create({
   tabIcon: {
     alignItems: 'center',
     justifyContent: 'center',
-    width: 24,
-    height: 24,
+    width: 32,
+    height: 32,
   },
   iconImage: {
-    width: 24,
-    height: 24,
+    width: 32,
+    height: 32,
   },
 });
