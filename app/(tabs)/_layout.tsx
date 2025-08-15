@@ -27,9 +27,9 @@ export default function TabLayout() {
         tabBarStyle: {
           backgroundColor: '#f5f5f5',
           borderTopWidth: 0,
-          height: 70,
-          paddingBottom: 12,
-          paddingTop: 8,
+          height: 75,
+          paddingBottom: 15,
+          paddingTop: 10,
           elevation: 0,
           shadowOpacity: 0,
           position: 'absolute',
@@ -39,10 +39,10 @@ export default function TabLayout() {
           borderRadius: 20,
         },
         tabBarLabelStyle: {
-          fontSize: 12,
-          fontWeight: '500',
+          fontSize: 11,
+          fontWeight: '600',
           color: '#000',
-          marginTop: 4,
+          marginTop: 6,
         },
         tabBarIconStyle: {
           marginBottom: 0,

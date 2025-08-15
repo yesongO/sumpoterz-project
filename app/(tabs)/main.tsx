@@ -15,40 +15,79 @@ export default function MainPage() {
       title: '한빛초등학교 AI교육봉사',
       date: '2025.10.08 ~ 10.10',
       location: '강화군 불은면 중앙로 삼성초등학교',
-      image: require('../../assets/images/men.png'), // 임시 이미지
+      image: require('../../assets/images/men.png'),
     },
     {
       id: 2,
-      title: '한빛초등학교 AI교육봉사',
-      date: '2025.10.08 ~ 10.10',
-      location: '강화군 불은면 중앙로 삼성초등학교',
+      title: '초등학생 코딩교육 봉사',
+      date: '2025.10.15 ~ 10.17',
+      location: '서울시 강남구 코딩아카데미',
       image: null,
     },
     {
       id: 3,
-      title: '한빛초등학교 AI교육봉사',
-      date: '2025.10.08 ~ 10.10',
-      location: '강화군 불은면 중앙로 삼성초등학교',
+      title: '노인정 디지털 교육 봉사',
+      date: '2025.10.20 ~ 10.22',
+      location: '인천시 연수구 행복노인정',
       image: null,
     },
     {
       id: 4,
-      title: '한빛초등학교 AI교육봉사',
-      date: '2025.10.08 ~ 10.10',
-      location: '강화군 불은면 중앙로 삼성초등학교',
+      title: '환경정리 및 플로깅 봉사',
+      date: '2025.10.25 ~ 10.26',
+      location: '한강공원 일대',
       image: null,
     },
     {
       id: 5,
-      title: '한빛초등학교 AI교육봉사',
-      date: '2025.10.08 ~ 10.10',
-      location: '강화군 불은면 중앙로 삼성초등학교',
+      title: '도서관 독서지도 봉사',
+      date: '2025.11.01 ~ 11.03',
+      location: '서울시립도서관 강남분관',
+      image: null,
+    },
+    {
+      id: 6,
+      title: '장애인 시설 방문 봉사',
+      date: '2025.11.05 ~ 11.07',
+      location: '인천시 장애인복지관',
+      image: null,
+    },
+    {
+      id: 7,
+      title: '동물보호소 봉사활동',
+      date: '2025.11.10 ~ 11.12',
+      location: '경기도 수원시 동물보호센터',
       image: null,
     },
   ];
 
   const handleEventPress = (eventId: number) => {
-    router.push(`/volunteer/${eventId}`);
+    // 각 봉사활동별로 다른 상세페이지로 이동
+    switch (eventId) {
+      case 1:
+        router.push('/volunteer/1'); // AI교육봉사 (기존)
+        break;
+      case 2:
+        router.push('/volunteer/coding-education'); // 코딩교육
+        break;
+      case 3:
+        router.push('/volunteer/digital-education'); // 디지털교육
+        break;
+      case 4:
+        router.push('/volunteer/environment'); // 환경정리
+        break;
+      case 5:
+        router.push('/volunteer/library'); // 도서관
+        break;
+      case 6:
+        router.push('/volunteer/disability'); // 장애인시설
+        break;
+      case 7:
+        router.push('/volunteer/animal'); // 동물보호소
+        break;
+      default:
+        router.push(`/volunteer/${eventId}`);
+    }
   };
 
   return (
@@ -129,11 +168,7 @@ export default function MainPage() {
         {/* 이벤트 리스트 */}
         <View style={styles.eventListContainer}>
           {events.map((event, index) => (
-            <TouchableOpacity 
-              key={event.id} 
-              style={styles.eventItem}
-              onPress={() => handleEventPress(event.id)}
-            >
+            <View key={event.id} style={styles.eventItem}>
               <View style={styles.eventImageContainer}>
                 {event.image ? (
                   <Image source={event.image} style={styles.eventImage} />
@@ -146,10 +181,13 @@ export default function MainPage() {
                 <Text style={styles.eventDate}>{event.date}</Text>
                 <Text style={styles.eventLocation}>{event.location}</Text>
               </View>
-              <TouchableOpacity style={styles.viewMoreButton}>
+              <TouchableOpacity 
+                style={styles.viewMoreButton}
+                onPress={() => handleEventPress(event.id)}
+              >
                 <Text style={styles.viewMoreText}>더보기</Text>
               </TouchableOpacity>
-            </TouchableOpacity>
+            </View>
           ))}
         </View>
       </ScrollView>
