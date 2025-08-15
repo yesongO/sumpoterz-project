@@ -68,7 +68,7 @@ export default function ProfileEdit() {
       <ScrollView style={styles.container} contentContainerStyle={{ paddingBottom: 100 }}>
         {/* 이름 */}
         <View style={styles.card}>
-          <View style={styles.infoRow}>
+          <View style={styles.infoBlockRow}>
             <Text style={styles.infoLabel}>이름</Text>
             <Text style={styles.infoValue}>{name}</Text>
           </View>
@@ -76,7 +76,7 @@ export default function ProfileEdit() {
 
         {/* 대학교 & 학과 */}
         <View style={styles.card}>
-          <View style={styles.infoRow}>
+          <View style={styles.infoBlockRow}>
             <Text style={styles.infoLabel}>대학교 & 학과</Text>
             <View style={styles.infoValueContainer}>
               <Text style={styles.infoValue}>{university}</Text>
@@ -142,34 +142,39 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1,
     borderColor: '#EFEFEF',
-    paddingHorizontal: 12,
-    paddingVertical: 10,
-    marginTop: 12,
+    paddingHorizontal: 16,
+    paddingVertical: 16,
+    marginTop: 16,
   },
   infoRow: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingVertical: 14,
+    paddingVertical: 16,
   },
   infoBlockRow: {
     flexDirection: 'row',
     alignItems: 'flex-start',
-    justifyContent: 'space-between',
-    paddingVertical: 14,
-    gap: 12,
+    justifyContent: 'flex-start',
+    paddingVertical: 16,
+    gap: 16,
   },
   infoLabel: {
-    width: 90,
-    fontSize: 14,
+    width: 100,
+    fontSize: 15,
     color: '#666',
+    fontWeight: '500',
   },
   infoValue: {
-    fontSize: 14,
+    fontSize: 15,
     color: '#222',
+    fontWeight: '400',
+    textAlign: 'left',
+    flex: 1,
   },
   infoValueContainer: {
-    alignItems: 'flex-end',
+    flex: 1,
+    alignItems: 'flex-start',
   },
   textInputContainer: {
     flex: 1,
@@ -178,6 +183,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 12,
     minHeight: 120,
+    backgroundColor: '#fff',
   },
   textInput: {
     fontSize: 14,
@@ -193,6 +199,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     paddingHorizontal: 12,
     paddingVertical: 8,
+    backgroundColor: '#fff',
   },
   portfolioInput: {
     flex: 1,
@@ -207,10 +214,10 @@ const styles = StyleSheet.create({
   },
   saveButton: {
     backgroundColor: '#007AFF',
-    paddingVertical: 15,
-    paddingHorizontal: 30,
+    paddingVertical: 16,
+    paddingHorizontal: 40,
     borderRadius: 25,
-    marginTop: 30,
+    marginTop: 40,
     marginHorizontal: 20,
     alignItems: 'center',
   },

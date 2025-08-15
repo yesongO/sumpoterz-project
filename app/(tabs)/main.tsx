@@ -4,10 +4,11 @@ import { Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View 
 import TopHeaderMain from '../../components/TopHeaderMain';
 
 export default function MainPage() {
-  const [selectedCategory, setSelectedCategory] = useState('교육');
+  const [selectedCategory, setSelectedCategory] = useState('전체');
+  const [searchQuery, setSearchQuery] = useState('');
   const router = useRouter();
   
-  const categories = ['교육', '예술', '음악', 'Category', 'Category'];
+  const categories = ['전체', '교육', '환경', '문화', '복지', '동물'];
   
   const events = [
     {
@@ -15,6 +16,7 @@ export default function MainPage() {
       title: '한빛초등학교 AI교육봉사',
       date: '2025.10.08 ~ 10.10',
       location: '강화군 불은면 중앙로 삼성초등학교',
+      category: '교육',
       image: require('../../assets/images/men.png'),
     },
     {
@@ -22,6 +24,7 @@ export default function MainPage() {
       title: '초등학생 코딩교육 봉사',
       date: '2025.10.15 ~ 10.17',
       location: '서울시 강남구 코딩아카데미',
+      category: '교육',
       image: null,
     },
     {
@@ -29,6 +32,7 @@ export default function MainPage() {
       title: '노인정 디지털 교육 봉사',
       date: '2025.10.20 ~ 10.22',
       location: '인천시 연수구 행복노인정',
+      category: '교육',
       image: null,
     },
     {
@@ -36,6 +40,7 @@ export default function MainPage() {
       title: '환경정리 및 플로깅 봉사',
       date: '2025.10.25 ~ 10.26',
       location: '한강공원 일대',
+      category: '환경',
       image: null,
     },
     {
@@ -43,6 +48,7 @@ export default function MainPage() {
       title: '도서관 독서지도 봉사',
       date: '2025.11.01 ~ 11.03',
       location: '서울시립도서관 강남분관',
+      category: '문화',
       image: null,
     },
     {
@@ -50,6 +56,7 @@ export default function MainPage() {
       title: '장애인 시설 방문 봉사',
       date: '2025.11.05 ~ 11.07',
       location: '인천시 장애인복지관',
+      category: '복지',
       image: null,
     },
     {
@@ -57,9 +64,41 @@ export default function MainPage() {
       title: '동물보호소 봉사활동',
       date: '2025.11.10 ~ 11.12',
       location: '경기도 수원시 동물보호센터',
+      category: '동물',
       image: null,
     },
   ];
+
+  // 검색 및 필터링된 이벤트 계산
+  const filteredEvents = events.filter(event => {
+    // 검색어 필터링
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase();
+      const matchesSearch = 
+        event.title.toLowerCase().includes(query) ||
+        event.location.toLowerCase().includes(query) ||
+        event.category.toLowerCase().includes(query);
+      
+      if (!matchesSearch) return false;
+    }
+
+    // 카테고리 필터링
+    if (selectedCategory !== '전체') {
+      return event.category === selectedCategory;
+    }
+
+    return true;
+  });
+
+  // 검색어 입력 처리
+  const handleSearchChange = (text: string) => {
+    setSearchQuery(text);
+  };
+
+  // 검색어 초기화
+  const handleSearchClear = () => {
+    setSearchQuery('');
+  };
 
   const handleEventPress = (eventId: number) => {
     // 각 봉사활동별로 다른 상세페이지로 이동
@@ -108,7 +147,14 @@ export default function MainPage() {
               style={styles.searchInput}
               placeholder="Search"
               placeholderTextColor="#999"
+              value={searchQuery}
+              onChangeText={handleSearchChange}
             />
+            {searchQuery && (
+              <TouchableOpacity onPress={handleSearchClear}>
+                <Text style={styles.clearSearchIcon}>✕</Text>
+              </TouchableOpacity>
+            )}
           </View>
         </View>
 
@@ -167,28 +213,34 @@ export default function MainPage() {
 
         {/* 이벤트 리스트 */}
         <View style={styles.eventListContainer}>
-          {events.map((event, index) => (
-            <View key={event.id} style={styles.eventItem}>
-              <View style={styles.eventImageContainer}>
-                {event.image ? (
-                  <Image source={event.image} style={styles.eventImage} />
-                ) : (
-                  <View style={styles.eventImagePlaceholder} />
-                )}
+          {filteredEvents.length === 0 ? (
+            <Text style={styles.noEventsMessage}>
+              검색 결과가 없습니다.
+            </Text>
+          ) : (
+            filteredEvents.map((event, index) => (
+              <View key={event.id} style={styles.eventItem}>
+                <View style={styles.eventImageContainer}>
+                  {event.image ? (
+                    <Image source={event.image} style={styles.eventImage} />
+                  ) : (
+                    <View style={styles.eventImagePlaceholder} />
+                  )}
+                </View>
+                <View style={styles.eventContent}>
+                  <Text style={styles.eventTitle}>{event.title}</Text>
+                  <Text style={styles.eventDate}>{event.date}</Text>
+                  <Text style={styles.eventLocation}>{event.location}</Text>
+                </View>
+                <TouchableOpacity 
+                  style={styles.viewMoreButton}
+                  onPress={() => handleEventPress(event.id)}
+                >
+                  <Text style={styles.viewMoreText}>더보기</Text>
+                </TouchableOpacity>
               </View>
-              <View style={styles.eventContent}>
-                <Text style={styles.eventTitle}>{event.title}</Text>
-                <Text style={styles.eventDate}>{event.date}</Text>
-                <Text style={styles.eventLocation}>{event.location}</Text>
-              </View>
-              <TouchableOpacity 
-                style={styles.viewMoreButton}
-                onPress={() => handleEventPress(event.id)}
-              >
-                <Text style={styles.viewMoreText}>더보기</Text>
-              </TouchableOpacity>
-            </View>
-          ))}
+            ))
+          )}
         </View>
       </ScrollView>
     </>
@@ -220,6 +272,10 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 16,
     color: '#333',
+  },
+  clearSearchIcon: {
+    fontSize: 20,
+    marginLeft: 10,
   },
   bannerContainer: {
     paddingHorizontal: 20,
@@ -361,5 +417,11 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 12,
     fontWeight: '500',
+  },
+  noEventsMessage: {
+    textAlign: 'center',
+    paddingVertical: 20,
+    color: '#666',
+    fontSize: 16,
   },
 });
