@@ -1,6 +1,5 @@
-import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from 'expo-router';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 type TopHeaderProps = {
@@ -30,7 +29,7 @@ export default function TopHeaderStudent({
                 <Text style={styles.logoText}>{logoText}</Text>
 
                 <TouchableOpacity onPress={() => router.push('/profile/edit')}>
-                    <Ionicons name="pencil" size={32} color="#333" style={styles.penIcon} />
+                    <Image source={require('../assets/images/pencil.png')} style={styles.penIcon} />
                 </TouchableOpacity>
             </View>
         </SafeAreaView>
@@ -60,5 +59,8 @@ const styles = StyleSheet.create({
     },
     penIcon: {
         marginRight: 10,
+        width: 32,
+        height: 32,
+        resizeMode: 'contain',
     },
 });
