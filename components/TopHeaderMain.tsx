@@ -7,6 +7,7 @@ type TopHeaderProps = {
     logoText?: string;
     profileImageSource?: any; // require(...) 또는 URL
     gender?: 'male' | 'female' | 'agency';
+    onLogoutPress?: () => void; // 로그아웃 함수 추가
 };
 
 export default function TopHeader({
@@ -14,6 +15,7 @@ export default function TopHeader({
     logoText = '섬포터즈',
     gender = 'agency',
     profileImageSource,
+    onLogoutPress,
 }: TopHeaderProps) {
     const router = useRouter();
 
@@ -25,11 +27,20 @@ export default function TopHeader({
             ? require('../assets/images/women.png')
             : null;
 
+    // 뒤로가기 또는 로그아웃 처리
+    const handleBackPress = () => {
+        if (onLogoutPress) {
+            onLogoutPress(); // 로그아웃 함수 호출
+        } else {
+            router.back(); // 기본 뒤로가기
+        }
+    };
+
     return (
         <SafeAreaView edges={['top']} style={{ backgroundColor: '#fff' }}>
             <View style={styles.container}>
                 {showBackButton ? (
-                    <TouchableOpacity onPress={() => router.back()}>
+                    <TouchableOpacity onPress={handleBackPress}>
                         <Text style={styles.backText}>←</Text>
                     </TouchableOpacity>
                 ) : (

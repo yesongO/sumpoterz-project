@@ -1,7 +1,7 @@
 import { useFonts } from 'expo-font';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { customFonts } from '../constants/fonts';
 
 export default function SelectTypeScreen() {
@@ -43,35 +43,29 @@ export default function SelectTypeScreen() {
                 <Text style={styles.title}>선택해 주세요</Text>
                 
                     <View style={styles.cardContainer}>
-                        <TouchableOpacity style={styles.card} onPress={handleStudentSelect}>
-                            <View style={styles.cardContent}>
-                                <View style={styles.studentIcon}>
-                                    <View style={styles.studentCharacter}>
-                                        <View style={styles.head} />
-                                        <View style={styles.body} />
-                                        <View style={styles.books}>
-                                            <View style={[styles.book, styles.book1]} />
-                                            <View style={[styles.book, styles.book2]} />
-                                            <View style={[styles.book, styles.book3]} />
-                                        </View>
-                                    </View>
+                        <View style={styles.cardWrapper}>
+                            <TouchableOpacity style={styles.card} onPress={handleStudentSelect}>
+                                <View style={styles.cardContent}>
+                                    <Image 
+                                        source={require('../assets/images/signin_student.png')} 
+                                        style={styles.studentImage} 
+                                    />
                                 </View>
-                                <Text style={styles.cardText}>학생이에요</Text>
-                            </View>
-                        </TouchableOpacity>
+                            </TouchableOpacity>
+                            <Text style={styles.cardText}>학생이에요</Text>
+                        </View>
 
-                        <TouchableOpacity style={styles.card} onPress={handleAgencySelect}>
-                            <View style={styles.cardContent}>
-                                <View style={styles.agencyIcon}>
-                                    <View style={styles.buildings}>
-                                        <View style={[styles.building, styles.building1]} />
-                                        <View style={[styles.building, styles.building2]} />
-                                        <View style={[styles.building, styles.building3]} />
-                                    </View>
+                        <View style={styles.cardWrapper}>
+                            <TouchableOpacity style={styles.card} onPress={handleAgencySelect}>
+                                <View style={styles.cardContent}>
+                                    <Image 
+                                        source={require('../assets/images/signin_agency.png')} 
+                                        style={styles.agencyImage} 
+                                    />
                                 </View>
-                                <Text style={styles.cardText}>기관이에요</Text>
-                            </View>
-                        </TouchableOpacity>
+                            </TouchableOpacity>
+                            <Text style={styles.cardText}>기관이에요</Text>
+                        </View>
                     </View>
                 </View>
             </ScrollView>
@@ -126,13 +120,16 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         width: '100%',
         paddingHorizontal: 20,
-        gap: 20,
+        gap: 10,
+    },
+    cardWrapper: {
+        alignItems: 'center',
     },
     card: {
-        width: 140,
-        height: 140,
+        width: 160,
+        height: 160,
         backgroundColor: '#FFFFFF',
-        borderRadius: 70,
+        borderRadius: 90,
         borderWidth: 1,
         borderColor: '#E0E0E0',
         justifyContent: 'center',
@@ -148,75 +145,24 @@ const styles = StyleSheet.create({
     },
     cardContent: {
         alignItems: 'center',
+        justifyContent: 'center',
     },
-    studentIcon: {
-        marginBottom: 10,
+    studentImage: {
+        width: 100,
+        height: 100,
+        resizeMode: 'contain',
     },
-    studentCharacter: {
-        alignItems: 'center',
-    },
-    head: {
-        width: 30,
-        height: 30,
-        borderRadius: 15,
-        backgroundColor: '#FFB74D',
-        marginBottom: 5,
-    },
-    body: {
-        width: 40,
-        height: 50,
-        backgroundColor: '#FF9800',
-        borderRadius: 20,
-        marginBottom: 10,
-    },
-    books: {
-        flexDirection: 'row',
-    },
-    book: {
-        width: 12,
-        height: 15,
-        borderRadius: 2,
-        marginHorizontal: 1,
-    },
-    book1: {
-        backgroundColor: '#4CAF50',
-    },
-    book2: {
-        backgroundColor: '#E91E63',
-    },
-    book3: {
-        backgroundColor: '#9C27B0',
-    },
-    agencyIcon: {
-        marginBottom: 10,
-    },
-    buildings: {
-        flexDirection: 'row',
-        alignItems: 'flex-end',
-    },
-    building: {
-        borderRadius: 4,
-        marginHorizontal: 2,
-    },
-    building1: {
-        width: 20,
-        height: 35,
-        backgroundColor: '#9C27B0',
-    },
-    building2: {
-        width: 25,
-        height: 45,
-        backgroundColor: '#2196F3',
-    },
-    building3: {
-        width: 18,
-        height: 30,
-        backgroundColor: '#03A9F4',
+    agencyImage: {
+        width: 100,
+        height: 100,
+        resizeMode: 'contain',
     },
     cardText: {
         fontFamily: 'godoMaum',
-        fontSize: 16,
+        fontSize: 24,
         color: '#000000',
         textAlign: 'center',
+        marginTop: 15,
+        fontWeight: '600',
     },
 });
