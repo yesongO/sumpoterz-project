@@ -159,10 +159,10 @@ const styles = StyleSheet.create({
   },
   infoBlockRow: {
     flexDirection: 'row',
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     paddingVertical: 16,
-    gap: 16,
+    gap: 14,
   },
   infoLabel: {
     width: 100,
@@ -175,6 +175,7 @@ const styles = StyleSheet.create({
     color: '#222',
     fontWeight: '400',
     textAlign: 'left',
+    marginBottom: 4,
     flex: 1,
   },
   infoValueContainer: {
@@ -184,6 +185,7 @@ const styles = StyleSheet.create({
   linkText: {
     color: '#0066CC',
     textDecorationLine: 'underline',
+    right: '128%',
   },
   separator: {
     height: 1,
@@ -191,18 +193,19 @@ const styles = StyleSheet.create({
     marginHorizontal: 0,
   },
   sectionHeaderRow: {
-    marginTop: 18,
+    marginTop: 26,
     paddingHorizontal: 2,
   },
   sectionHeaderText: {
-    fontSize: 14,
-    color: '#666',
+    fontSize: 16,
+    left: 4,
+    color: '#222',
   },
   volunteerRow: {
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: 14,
-    gap: 12,
+    gap: 23,
   },
   volunteerThumb: {
     width: 56,

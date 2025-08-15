@@ -3,10 +3,10 @@ import { Tabs } from 'expo-router';
 import { Image, StyleSheet, View } from 'react-native';
 
 const icons = {
-  home: require('@/components/common/home.png'),
-  calendar: require('@/components/common/calendar.png'),
-  bell: require('@/components/common/bell.png'),
-  user: require('@/components/common/user.png'),
+  home: require('@/components/common/home2.png'),
+  calendar: require('@/components/common/calendar2.png'),
+  bell: require('@/components/common/bell2.png'),
+  user: require('@/components/common/user2.png'),
 };
 
 export default function TabLayout() {
