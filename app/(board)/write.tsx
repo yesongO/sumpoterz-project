@@ -5,8 +5,8 @@ import { router } from 'expo-router';
 import { useState } from 'react';
 import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import TopHeaderBoard from '../../../components/TopHeaderBoard';
-import { customFonts } from '../../../constants/fonts';
+import TopHeaderBoard from '../../components/TopHeaderBoard';
+import { customFonts } from '../../constants/fonts';
 
 export default function BoardWrite() {
   const [title, setTitle] = useState('');

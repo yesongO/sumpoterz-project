@@ -26,7 +26,7 @@ export default function TopHeader({
                 )}
 
                 <Text style={styles.logoText}>{logoText}</Text>
-                <TouchableOpacity onPress={() => router.push('/board/write')}>
+                <TouchableOpacity onPress={() => router.push('/(board)/write')}>
                     <Ionicons name="pencil" size={32} color="#333" style={styles.penIcon} />
                 </TouchableOpacity>
             </View>

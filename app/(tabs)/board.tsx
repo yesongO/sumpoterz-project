@@ -34,7 +34,7 @@ export default function BoardPage() {
         renderItem={({ item }) => (
           <Pressable
             style={styles.item}
-            onPress={() => router.push(`/board/${item.id}`)}
+            onPress={() => router.push(`/(board)/${item.id}`)}
           >
             <Text style={styles.title}>{item.title}</Text>
             <Text style={styles.date}>봉사날짜 : {item.date}</Text>
@@ -65,11 +65,13 @@ const styles = StyleSheet.create({
     fontSize: 18, 
     fontFamily: 'preMedium',
     fontWeight: 'bold',
-    marginBottom: 8,
+    marginBottom: 6,
+    marginTop: 4,
   },
   date: { 
     color: '#666', 
     marginTop: 4,
     fontFamily: 'preLight',
+    marginBottom: 4,
   },
 });
