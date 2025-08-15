@@ -27,7 +27,7 @@ export default function AgencyProfile() {
           </View>
           <View style={styles.infoItem}>
             <ThemedText style={styles.label}>연락처:</ThemedText>
-            <ThemedText style={styles.value}>02-1234-5678</ThemedText>
+            <ThemedText style={styles.value}>02222-1234-5678</ThemedText>
           </View>
         </View>
 
