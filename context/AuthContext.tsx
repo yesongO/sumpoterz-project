@@ -11,6 +11,10 @@ interface User {
     organization?: string;
     address?: string;
     phone?: string;
+    university?: string;
+    major?: string;
+    selfIntroduction?: string;
+    portfolio?: string;
   };
 }
 

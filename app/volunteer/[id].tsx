@@ -1,6 +1,6 @@
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { Alert, Linking, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, Image, Linking, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import TopHeaderMain from '../../components/TopHeaderMain';
 
 interface VolunteerData {
@@ -94,19 +94,12 @@ export default function VolunteerDetail() {
         <View style={styles.bannerSection}>
           <View style={styles.bannerContent}>
             <View style={styles.bannerIllustration}>
-              <View style={styles.personContainer}>
-                <View style={styles.person1}>
-                  <View style={styles.person1Body} />
-                  <View style={styles.thoughtBubble1} />
-                </View>
-                <View style={styles.person2}>
-                  <View style={styles.person2Body} />
-                  <View style={styles.thoughtBubble2} />
-                </View>
-                <View style={styles.person3}>
-                  <View style={styles.person3Body} />
-                </View>
-              </View>
+              <Image 
+                source={require('../../assets/images/StudentsImage.png')} 
+                style={styles.studentsImage}
+                resizeMode="contain"
+              />
+              <Text style={styles.imageDimensions}>92 × 87</Text>
             </View>
             <View style={styles.bannerInfo}>
               <Text style={styles.bannerTitle}>{volunteer.title}</Text>
@@ -194,52 +187,17 @@ const styles = StyleSheet.create({
   },
   bannerIllustration: {
     marginRight: 20,
-  },
-  personContainer: {
     alignItems: 'center',
   },
-  person1: {
-    alignItems: 'center',
+  studentsImage: {
+    width: 92,
+    height: 87,
     marginBottom: 10,
   },
-  person1Body: {
-    width: 30,
-    height: 40,
-    backgroundColor: '#FFD700',
-    borderRadius: 15,
-  },
-  thoughtBubble1: {
-    width: 20,
-    height: 20,
-    backgroundColor: '#fff',
-    borderRadius: 10,
+  imageDimensions: {
+    fontSize: 12,
+    color: '#666',
     marginTop: 5,
-  },
-  person2: {
-    alignItems: 'center',
-    marginBottom: 10,
-  },
-  person2Body: {
-    width: 30,
-    height: 40,
-    backgroundColor: '#FFB6C1',
-    borderRadius: 15,
-  },
-  thoughtBubble2: {
-    width: 20,
-    height: 20,
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    marginTop: 5,
-  },
-  person3: {
-    alignItems: 'center',
-  },
-  person3Body: {
-    width: 30,
-    height: 40,
-    backgroundColor: '#87CEEB',
-    borderRadius: 15,
   },
   bannerInfo: {
     flex: 1,
@@ -247,17 +205,17 @@ const styles = StyleSheet.create({
   bannerTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#2d5a2d',
     marginBottom: 8,
   },
   bannerDate: {
     fontSize: 16,
-    color: '#333',
+    color: '#4a7c59',
     marginBottom: 5,
   },
   bannerLocation: {
     fontSize: 14,
-    color: '#666',
+    color: '#4a7c59',
   },
   detailSection: {
     padding: 20,
