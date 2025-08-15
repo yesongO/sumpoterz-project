@@ -44,7 +44,7 @@ export default function StudentProfile() {
           <Separator />
           <View style={styles.infoBlockRow}>
             <Text style={styles.infoLabel}>대학명 & 학과</Text>
-            <View style={{ flex: 1 }}>
+            <View style={styles.infoValueContainer}>
               <Text style={styles.infoValue}>{user?.profile?.university || '인하대학교'}</Text>
               <Text style={styles.infoValue}>{user?.profile?.major || '인공지능공학과'}</Text>
             </View>
@@ -52,10 +52,10 @@ export default function StudentProfile() {
           <Separator />
           <View style={styles.infoBlockRow}>
             <Text style={styles.infoLabel}>자기소개</Text>
-            <View style={{ flex: 1 }}>
+            <View style={styles.infoValueContainer}>
               {user?.profile?.selfIntroduction ? (
                 user.profile.selfIntroduction.split('\n').map((line, index) => (
-                  <Text key={index} style={styles.infoValue}>{line}</Text>
+                  <Text key={index} style={styles.infoValue}>{line || '자기소개를 입력해주세요'}</Text>
                 ))
               ) : (
                 <>
@@ -123,7 +123,7 @@ export default function StudentProfile() {
 
 function InfoRow({ label, value }: { label: string; value: string }) {
   return (
-    <View style={styles.infoRow}>
+    <View style={styles.infoBlockRow}>
       <Text style={styles.infoLabel}>{label}</Text>
       <Text style={styles.infoValue}>{value}</Text>
     </View>
@@ -142,34 +142,44 @@ const styles = StyleSheet.create({
   },
   card: {
     backgroundColor: '#fff',
-    borderRadius: 10,
+    borderRadius: 12,
     borderWidth: 1,
     borderColor: '#EFEFEF',
-    paddingHorizontal: 12,
-    paddingVertical: 10,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
     marginTop: 12,
-  },
-  infoRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingVertical: 14,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
+    elevation: 2,
   },
   infoBlockRow: {
     flexDirection: 'row',
     alignItems: 'flex-start',
-    justifyContent: 'space-between',
-    paddingVertical: 14,
-    gap: 12,
+    justifyContent: 'flex-start',
+    paddingVertical: 16,
+    gap: 16,
   },
   infoLabel: {
-    width: 90,
-    fontSize: 14,
+    width: 100,
+    fontSize: 15,
     color: '#666',
+    fontWeight: '500',
   },
   infoValue: {
-    fontSize: 14,
+    fontSize: 15,
     color: '#222',
+    fontWeight: '400',
+    textAlign: 'left',
+    flex: 1,
+  },
+  infoValueContainer: {
+    flex: 1,
+    alignItems: 'flex-start',
   },
   linkText: {
     color: '#0066CC',
@@ -178,6 +188,7 @@ const styles = StyleSheet.create({
   separator: {
     height: 1,
     backgroundColor: '#F0F0F0',
+    marginHorizontal: 0,
   },
   sectionHeaderRow: {
     marginTop: 18,

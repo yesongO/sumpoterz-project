@@ -49,6 +49,21 @@ export function AuthProvider({ children }: AuthProviderProps) {
       const savedUser = null; // await AsyncStorage.getItem('user');
       if (savedUser) {
         setUser(JSON.parse(savedUser));
+      } else {
+        // 테스트용 기본 사용자 정보 설정
+        const defaultUser: User = {
+          id: '1',
+          name: '강유림',
+          email: 'test@example.com',
+          type: 'student',
+          profile: {
+            university: '인하대학교',
+            major: '인공지능공학과',
+            selfIntroduction: '자기소개를 합니다.\n안녕하세요\n일단 대충 만들겠습니다.\n봉사정신 투철합니다.\n섬포터즈 화이팅',
+            portfolio: 'www.tistory.com',
+          },
+        };
+        setUser(defaultUser);
       }
     } catch (error) {
       console.error('Auth status check failed:', error);
@@ -118,7 +133,15 @@ export function AuthProvider({ children }: AuthProviderProps) {
     try {
       if (!user) return false;
       
-      const updatedUser = { ...user, ...profileData };
+      const updatedUser = { 
+        ...user, 
+        ...profileData,
+        profile: {
+          ...user.profile,
+          ...profileData.profile,
+        }
+      };
+      
       setUser(updatedUser);
       // await AsyncStorage.setItem('user', JSON.stringify(updatedUser));
       return true;

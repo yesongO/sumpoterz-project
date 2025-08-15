@@ -28,14 +28,20 @@ export default function ProfileEdit() {
 
   const handleSave = async () => {
     try {
+      // 입력값 검증
+      if (!name.trim() || !university.trim() || !major.trim()) {
+        Alert.alert('알림', '필수 항목을 모두 입력해주세요.');
+        return;
+      }
+
       const success = await updateProfile({
-        name,
+        name: name.trim(),
         profile: {
           ...user?.profile,
-          university,
-          major,
-          selfIntroduction,
-          portfolio,
+          university: university.trim(),
+          major: major.trim(),
+          selfIntroduction: selfIntroduction.trim(),
+          portfolio: portfolio.trim(),
         },
       });
 
@@ -50,6 +56,7 @@ export default function ProfileEdit() {
         Alert.alert('오류', '프로필 저장에 실패했습니다.');
       }
     } catch (error) {
+      console.error('Profile save error:', error);
       Alert.alert('오류', '프로필 저장 중 오류가 발생했습니다.');
     }
   };
